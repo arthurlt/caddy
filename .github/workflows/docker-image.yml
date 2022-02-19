@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 env:
-  TAG: $(date +%s)    
+  TAG: test
 
 jobs:
   login:
@@ -24,6 +24,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag custom-caddy:${{ env.TAG }}
+        run: docker build . --file Dockerfile --tag arthurlt/custom-caddy:${{ env.TAG }}
       - name: Push the Docker image
         run: docker push ghcr.io/arthurlt/custom-caddy:${{ env.TAG }}
