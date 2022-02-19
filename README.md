@@ -1,4 +1,4 @@
-# Caddy, Customized
+# Caddy (Docker Image)
 I've taken the latest image of Caddy and added on a few useful modules.
 
 - [ntlm-transport](https://github.com/caddyserver/ntlm-transport)
