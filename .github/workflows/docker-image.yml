@@ -16,7 +16,7 @@ jobs:
           registry: ghcr.io
           username: arthurlt
           password: ${{ secrets.CR_PAT }}
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag custom-caddy:$(date +%s)
       - name: Push the Docker image
