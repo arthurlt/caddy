@@ -6,18 +6,24 @@ on:
   pull_request:
     branches: [ main ]
 
+env:
+  TAG: $(date +%s)    
+
 jobs:
-  build:
+  login:
     runs-on: ubuntu-latest
     steps:
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
         with:
           registry: ghcr.io
-          username: arthurlt
-          password: ${{ secrets.CR_PAT }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+  build:
+    runs-on: ubuntu-latest
+    steps:
       - uses: actions/checkout@v2
-      - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag custom-caddy:$(date +%s)
+        name: Build the Docker image
+        run: docker build . --file Dockerfile --tag custom-caddy:${{ env.TAG }}
       - name: Push the Docker image
-        run: docker push ghcr.io/arthurlt/custom-caddy:$(date +%s)
+        run: docker push ghcr.io/arthurlt/custom-caddy:${{ env.TAG }}
