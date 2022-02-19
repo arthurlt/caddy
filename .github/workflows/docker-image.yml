@@ -7,16 +7,17 @@ on:
     branches: [ main ]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
-    - name: Login to GH Container Registry
-      run: echo $CR_PAT | docker login ghcr.io -u arthurlt --password-stdin
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag custom-caddy:$(date +%s)
-    - name: Push the Docker image
-      run: docker push ghcr.io/arthurlt/custom-caddy:$(date +%s)
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: arthurlt
+          password: ${{ secrets.CR_PAT }}
+        uses: actions/checkout@v2
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag custom-caddy:$(date +%s)
+      - name: Push the Docker image
+        run: docker push ghcr.io/arthurlt/custom-caddy:$(date +%s)
