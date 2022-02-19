@@ -8,6 +8,7 @@ on:
 
 env:
   TAG: test
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   login:
@@ -24,6 +25,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag arthurlt/custom-caddy:${{ env.TAG }}
+        run: docker build . --file Dockerfile --tag ${{ env.IMAGE_NAME }}:${{ env.TAG }}
       - name: Push the Docker image
-        run: docker push ghcr.io/arthurlt/custom-caddy:${{ env.TAG }}
+        run: docker push ghcr.io/${{ env.IMAGE_NAME }}:${{ env.TAG }}
