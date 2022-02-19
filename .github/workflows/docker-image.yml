@@ -14,5 +14,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Login to GH Container Registry
+      run: echo $CR_PAT | docker login ghcr.io -u arthurlt --password-stdin
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag custom-caddy:$(date +%s)
+    - name: Push the Docker image
+      run: docker push ghcr.io/arthurlt/custom-caddy:$(date +%s)
