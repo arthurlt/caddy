@@ -3,6 +3,8 @@ name: Docker CI (latest)
 on:
   push:
     branches: [ main ]
+  schedule:
+    - cron: '30 3 * * SUN'
 
 permissions:
   packages: write
